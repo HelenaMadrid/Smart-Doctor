@@ -14,7 +14,7 @@ import {
 import Spinner from "../common/Spinner";
 import SideNav from "./SideNav/SideNav";
 import TopNav from "./TopNav/TopNav";
-import Dashboard from "./MainContent/Dashboard original";
+import Dashboard from "./MainContent/Dashboard";
 import Tasks from "./MainContent/Tasks";
 import Project from "./MainContent/Project/Project";
 import Patient from "./MainContent/Patient/Patient";
@@ -25,7 +25,7 @@ import "./Layout.scss";
 class Layout extends Component {
   componentDidMount() {
     this.props.getProjects();
-    this.props.getPatients();
+    //this.props.getPatients();
   }
 
   render() {
@@ -75,7 +75,7 @@ class Layout extends Component {
                 component={Dashboard}
               />
               <Route exact path="/tasks" component={Tasks} />
-              <Route exact path="/patients" component={Patient} />
+              {/* <Route exact path="/patients" component={Patient} /> */}
               <Route component={NotFound} />
             </Switch>
           </div>
