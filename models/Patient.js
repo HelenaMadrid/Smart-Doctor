@@ -9,15 +9,15 @@ const PatientSchema = new Schema({
   },
   age: {
     type: Number,
-    required: true
+    // required: true
   },
   weight: {
     type: Number,
-    required: true
+    // required: true
   },
   height: {
     type: Number,
-    required: true
+    // required: true
   },
   notes: {
     type: String,

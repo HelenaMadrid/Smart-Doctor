@@ -22,7 +22,10 @@ class Modal extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.edit) {
       this.setState({
-        patientName: nextProps.name
+        patientName: nextProps.name,
+        age: nextProps.age,
+        height: nextProps.height,
+        weight: nextProps.weight
       });
     }
   }
@@ -52,9 +55,12 @@ class Modal extends Component {
   createPatient = () => {
     let patient = {
       patientName: this.state.patientName,
+      age: this.state.age,
+      height: this.state.height,
+      weight: this.state.weight
     };
 
-    this.props.createProject(patient);
+    this.props.createPatient(patient);
     this.onClose();
   };
 
@@ -62,6 +68,9 @@ class Modal extends Component {
     let patient = {
       id: this.props.id,
       patientName: this.state.patientName,
+      age: this.state.age,
+      height: this.state.height,
+      weight: this.state.weight
     };
 
     await this.props.updatePatient(patient);
@@ -414,13 +423,39 @@ class Modal extends Component {
           </div>
           <div className="form-group">
             <label>
-              <div className="form-label">age (required)</div>
+              <div className="form-label">age</div>
               <input
                 onChange={this.onChange}
                 value={this.state.age}
                 id="age"
                 type="number"
                 placeholder="patient age"
+                className="form-input"
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              <div className="form-label">height</div>
+              <input
+                onChange={this.onChange}
+                value={this.state.height}
+                id="height"
+                type="number"
+                placeholder="patient height"
+                className="form-input"
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              <div className="form-label">weight</div>
+              <input
+                onChange={this.onChange}
+                value={this.state.weight}
+                id="weight"
+                type="number"
+                placeholder="patient weight"
                 className="form-input"
               />
             </label>

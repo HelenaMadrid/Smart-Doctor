@@ -2,47 +2,43 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const Project = require("../../models/Patient");
+const Patient = require("../../models/Patient");
 
-// @route GET api/projects
+// @route GET api/patients
 // @desc Get all projects for a specific user
 // @access Private
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    let projectsArr = [];
+    let patientsArr = [];
 
     // Member projects
-    await Project.find({})
-      .then(projects => {
-        projects.map(project => {
-          project.teamMembers.map(member => {
-            if (member.email == req.user.email) {
-              projectsArr.push(project);
-            }
-          });
-        });
-      })
-      .catch(err => console.log(err));
+    // await Patient.find({})
+    //   .then(patients => {
+    //     patients.map(patient => {
+    //       patientsArr.push(patient);
+    //     });
+    //   })
+    //   .catch(err => console.log(err));
 
-    const OWNER = {
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email
-    };
+    // const OWNER = {
+    //   id: req.user.id,
+    //   name: req.user.name,
+    //   email: req.user.email
+    // };
 
     // Combine with owner projects
-    await Project.find({ owner: OWNER })
-      .then(projects => {
-        let finalArr = [...projects, ...projectsArr];
+    await Patient.find({ owner: OWNER })
+      .then(patients => {
+        let finalArr = [...patients, ...patientsArr];
         res.json(finalArr);
       })
       .catch(err => console.log(err));
   }
 );
 
-// @route GET api/projects/:id
+// @route GET api/patients/:id
 // @desc Get specific project by id
 // @access Private
 router.get(
@@ -51,11 +47,11 @@ router.get(
   (req, res) => {
     let id = req.params.id;
 
-    Project.findById(id).then(project => res.json(project));
+    Patient.findById(id).then(patient => res.json(patient));
   }
 );
 
-// @route POST api/projects/create
+// @route POST api/patients/create
 // @desc Create a new project
 // @access Private
 router.post(
@@ -68,49 +64,50 @@ router.post(
       email: req.user.email
     };
 
-    const NEW_PROJECT = await new Project({
+    const NEW_PATIENT = await new Patient({
       owner: OWNER,
-      name: req.body.projectName,
-      teamMembers: req.body.members
+      name: req.body.patientName,
+      age: req.body.age,
+      height: req.body.height,
+      weight: req.body.weight
     });
 
-    NEW_PROJECT.save().then(project => res.json(project));
+    NEW_PATIENT.save().then(patient => res.json(patient));
   }
 );
 
-// @route PATCH api/projects/update
+// @route PATCH api/patients/update
 // @desc Update an existing project
 // @access Private
 router.patch(
   "/update",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    let projectFields = {};
+    let patientFields = {};
 
-    projectFields.name = req.body.projectName;
-    projectFields.teamMembers = req.body.members;
+    patientFields.name = req.body.patientName;
 
-    Project.findOneAndUpdate(
+    Patient.findOneAndUpdate(
       { _id: req.body.id },
-      { $set: projectFields },
+      { $set: patientFields },
       { new: true }
     )
-      .then(project => {
-        res.json(project);
+      .then(patient => {
+        res.json(patient);
       })
       .catch(err => console.log(err));
   }
 );
 
-// @route DELETE api/projects/delete/:id
+// @route DELETE api/patients/delete/:id
 // @desc Delete an existing project
 // @access Private
 router.delete(
   "/delete/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Project.findById(req.params.id).then(project => {
-      project.remove().then(() => res.json({ success: true }));
+    Patient.findById(req.params.id).then(patient => {
+      patient.remove().then(() => res.json({ success: true }));
     });
   }
 );

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getProjects } from "../../actions/projectsActions";
+import { getPatients } from "../../actions/patientsActions";
 
 import {
   BrowserRouter as Router,
@@ -13,9 +14,10 @@ import {
 import Spinner from "../common/Spinner";
 import SideNav from "./SideNav/SideNav";
 import TopNav from "./TopNav/TopNav";
-import Dashboard from "./MainContent/Dashboard";
+import Dashboard from "./MainContent/Dashboard original";
 import Tasks from "./MainContent/Tasks";
 import Project from "./MainContent/Project/Project";
+import Patient from "./MainContent/Patient/Patient";
 import NotFound from "../404/404";
 
 import "./Layout.scss";
@@ -23,10 +25,12 @@ import "./Layout.scss";
 class Layout extends Component {
   componentDidMount() {
     this.props.getProjects();
+    this.props.getPatients();
   }
 
   render() {
     const { projects, projectsLoading } = this.props.projects;
+   // const { patients, patientsLoading } = this.props.patients;
 
     let dashboardContent;
 
@@ -71,6 +75,7 @@ class Layout extends Component {
                 component={Dashboard}
               />
               <Route exact path="/tasks" component={Tasks} />
+              <Route exact path="/patients" component={Patient} />
               <Route component={NotFound} />
             </Switch>
           </div>
@@ -98,6 +103,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { getProjects }
+    {getProjects, getPatients}
   )(Layout)
 );
