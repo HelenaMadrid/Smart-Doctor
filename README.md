@@ -59,3 +59,4 @@ npm run dev
 
 // Server runs on http://localhost:5000 (set in server.js) and client on http://localhost:3000 (default for CRA)
 ```
+# smart-doctor-2-try
