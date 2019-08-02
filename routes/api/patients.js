@@ -22,11 +22,11 @@ router.get(
     //   })
     //   .catch(err => console.log(err));
 
-    // const OWNER = {
-    //   id: req.user.id,
-    //   name: req.user.name,
-    //   email: req.user.email
-    // };
+    const OWNER = {
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email
+    };
 
     // Combine with owner projects
     await Patient.find({ owner: OWNER })

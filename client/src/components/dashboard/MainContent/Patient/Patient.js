@@ -13,13 +13,12 @@ class Patient extends Component {
   state = {
     modal: false,
     edit: false,
-    // editTask: false,
-    // task: false,
     name: "",
-    // members: [],
+    age: "",
+    height: "",
+    weight: "",
     id: "",
     owner: {},
-    // tasks: [],
     date: ""
   };
 
@@ -32,84 +31,27 @@ class Patient extends Component {
       modal: !this.state.modal,
       edit: !this.state.edit,
       name: name,
-      // members: members,
       id: id,
       owner: owner
     });
   };
 
-  // toggleTaskModal = e => {
-  //   this.setState({
-  //     modal: !this.state.modal,
-  //     task: !this.state.task
-  //   });
-  // };
-
-  // toggleEditTaskModal = e => {
-  //   this.setState({
-  //     modal: !this.state.modal,
-  //     editTask: !this.state.editTask
-  //   });
-  // };
 
   componentDidMount() {
     this.props.getPatient(this.props.match.params.patient);
-    // this.props.getTasks(this.props.match.params.project);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.patient !== prevProps.match.params.patient) {
       this.props.getPatient(this.props.match.params.patient);
-      // this.props.getTasks(this.props.match.params.project);
     }
   }
 
-  // onChange = async e => {
-  //   await this.setState({ tasks: this.props.tasks.tasks });
-
-  //   let tasks = await [...this.state.tasks];
-
-  //   await alert(tasks[e.target.id].taskName);
-
-  //   tasks[e.target.id].taskName = await e.target.value;
-
-  //   await this.setState({ tasks });
-  // };
 
   render() {
-    // const { tasks } = this.props.tasks;
-
-    // let tasksList = tasks.map((task, index) => (
-    //   <div className="task-input" key={index}>
-    //     <i className="material-icons" onClick={() => alert("TODO")}>
-    //       check_circle
-    //     </i>
-    //     <input
-    //       type="text"
-    //       name="task"
-    //       id={index}
-    //       value={task.taskName}
-    //       onChange={this.onChange}
-    //       className="project-task"
-    //     />
-    //     <span className={!task.assignee ? "task-info muted" : "task-info"}>
-    //       {task.assignee === this.props.auth.user.email
-    //         ? "You"
-    //         : task.assignee || "Unassigned"}
-    //     </span>
-    //     <span
-    //       className={
-    //         task.dateDue === "Date undefined" ? "task-info muted" : "task-info"
-    //       }
-    //     >
-    //       {task.dateDue === "Date undefined" ? "Not Set" : task.dateDue}
-    //     </span>
-    //   </div>
-    // ));
-
+  
     if (
       this.props.patient &&
-      // this.props.project.teamMembers &&
       !this.props.patients.patientLoading
     ) {
       const { patient } = this.props;
@@ -121,7 +63,6 @@ class Patient extends Component {
             onClick={this.toggleEditModal.bind(
               this,
               patient.name,
-              // project.teamMembers,
               patient._id,
               patient.owner
             )}
@@ -135,9 +76,7 @@ class Patient extends Component {
               onClose={this.toggleModal}
               modal={this.state.modal}
               edit={this.state.edit}
-              // task={this.state.task}
               name={this.state.name}
-              // members={this.state.members}
               id={this.state.id}
               owner={this.state.owner}
             />

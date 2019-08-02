@@ -11,10 +11,7 @@ class Dashboard extends Component {
     modal: false,
     edit: false,
     name: "",
-    age: "",
-    // height: "",
-    // weight: "",
-    // notes: "",
+    members: [],
     id: "",
     owner: {}
   };
@@ -23,55 +20,53 @@ class Dashboard extends Component {
     this.setState({ modal: !this.state.modal, edit: false });
   };
 
-  toggleEditModal = (name, age, id, owner, e) => {
+  toggleEditModal = (name, members, id, owner, e) => {
     e.stopPropagation();
 
     this.setState({
       modal: !this.state.modal,
       edit: !this.state.edit,
       name: name,
-      age: age,
+      members: members,
       id: id,
       owner: owner
     });
   };
 
   render() {
-   const { patients } = this.props.patients;
+    const { projects } = this.props.projects;
 
-     let content;
+    let content;
 
-    let patientData = patients.sort().map(patient => (
+    let projectData = projects.sort().map(project => (
       <div
-        key={patient._id}
-        className="patient-icon"
-        onClick={() => this.props.history.push(`/patients/${patient._id}`)}
+        key={project._id}
+        className="project-icon"
+        onClick={() => this.props.history.push(`/projects/${project._id}`)}
       >
-        <div className="patient-name">{patient.name}</div>
-         <div
-          className="patient-info-button"
+        <div className="project-name">{project.name}</div>
+        <div
+          className="project-info-button"
           onClick={this.toggleEditModal.bind(
             this,
-            patient.name,
-            patient.age,
-            //patient.weight,
-            //patient.height,
-            patient._id,
-            patient.owner
+            project.name,
+            project.teamMembers,
+            project._id,
+            project.owner
           )}
         >
-          Edit patient
+          Edit project
         </div>
-        <div className="patient-info-button">Go to patient</div>
+        <div className="project-info-button">Go to project</div>
       </div>
-     ));
+    ));
 
-    if (patients.length > 0) {
-      // At least one patient
+    if (projects.length > 0) {
+      // At least one project
       content = (
         <>
           <button className="main-btn" onClick={this.toggleModal}>
-            Create another patient
+            Create another project
           </button>
           <div className="modal-wrapper">
             <Modal
@@ -79,23 +74,23 @@ class Dashboard extends Component {
               modal={this.state.modal}
               edit={this.state.edit}
               name={this.state.name}
-              age={this.state.age}
+              members={this.state.members}
               id={this.state.id}
               owner={this.state.owner}
             />
           </div>
-          <div className="patients-wrapper">{patientData}</div> 
+          <div className="projects-wrapper">{projectData}</div>
         </>
       );
     } else {
-      // No patients
+      // No projects
       content = (
         <>
-          <div className="patients">
-            <div className="no-patients">
-              <h1 className="header">You have no patients</h1>
+          <div className="projects">
+            <div className="no-projects">
+              <h1 className="header">You have no projects</h1>
               <button className="main-btn" onClick={this.toggleModal}>
-                Create your first patient
+                Create your first project
               </button>
               <div className="modal-wrapper">
                 <Modal onClose={this.toggleModal} modal={this.state.modal} />
@@ -108,15 +103,15 @@ class Dashboard extends Component {
 
     return (
       <div className="main-content">
-        <h1 className="header">Your patients</h1>
-       {content}
+        <h1 className="header">Your Projects</h1>
+        {content}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  patients: state.patients
+  projects: state.projects
 });
 
 export default connect(

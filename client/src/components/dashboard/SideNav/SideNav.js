@@ -26,11 +26,11 @@ class SideNav extends Component {
   };
 
   render() {
-    const { projects } = this.props.projects;
+    const { patients } = this.props.patients;
 
-    let projectData = projects.sort().map(project => (
-      <li className="project-listing" key={project._id}>
-        <Link to={`/projects/${project._id}`}>{project.name}</Link>
+   let patientData = patients.sort().map(patient => (
+      <li className="project-listing" key={patient._id}>
+        <Link to={`/patients/${patient._id}`}>{patient.name}</Link>
       </li>
     ));
 
@@ -66,12 +66,12 @@ class SideNav extends Component {
             </li>
           </div>
         </ul>
-        {projects.length > 0 && (
+        {patients.length > 0 && (
           <ul className="bottom">
             <li>
-              <h4 className="side-projects-header">Projects</h4>
+              <h4 className="side-projects-header">Patients</h4>
             </li>
-            <div className="project-listings">{projectData}</div>
+            <div className="project-listings">{patientData}</div>
           </ul>
         )}
       </nav>
@@ -80,7 +80,7 @@ class SideNav extends Component {
 }
 
 const mapStateToProps = state => ({
-  projects: state.projects
+  patients: state.patients
 });
 
 export default withRouter(

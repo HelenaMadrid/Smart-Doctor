@@ -9,9 +9,9 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  PATIENTs: [],
-  PATIENT: [],
-  PATIENTLoading: false,
+  patients: [],
+  patient: [],
+  patientLoading: false,
   patientsLoading: false
 };
 
